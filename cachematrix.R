@@ -19,17 +19,23 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 ## This function returns a matrix that is inverse of
-## x. It first looks for a cached result.
+## x. It only performs the solve computation if no
+## cached solution exist.
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  
   m <- x$getinverse()
+  
+  # Cache solution exists
   if(!is.null(m)) {
     message("getting cached data")
     return(m)
   }
+  
+  # No available cached solution
   data <- x$get()
   m <- solve(data) %*% data
   x$setinverse(m)
   m
+  
 }
